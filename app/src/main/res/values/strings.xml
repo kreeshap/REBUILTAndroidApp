@@ -3,4 +3,13 @@
     <string name="rebuilt_scouting_app">Rebuilt Scouting App</string>
     <string name="name">Name:</string>
     <string name="match">Match #</string>
+    <string name="team">Team #</string>
+    <string name="autonomous">Autonomous</string>
+    <string name="l1_hang">L1 Hang</string>
+    <string name="ball_collector">Ball Collector</string>
+    <string name="fuel_scored">Fuel Scored</string>
+    <string name="_1">1</string>
+    <string name="l3_hang">L3 Hang</string>
+    <string name="l2_hang">L2 Hang</string>
+    <string name="no_hang">No hang</string>
 </resources>

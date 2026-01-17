@@ -10,9 +10,10 @@
         android:orientation="vertical"
         android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="ExtraText">
 
-        //title
+        /title
         <TextView
             android:text="@string/rebuilt_scouting_app"
             android:textSize="28sp"
@@ -79,7 +80,8 @@
                     android:textColor="#FF8C42"
                     android:textColorHint="#AA6A35"
                     android:background="@null"
-                    android:paddingBottom="8dp"/>
+                    android:paddingBottom="8dp"
+                    tools:ignore="LabelFor" />
             </LinearLayout>
 
             <LinearLayout
@@ -87,9 +89,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingStart="8dp">
+                android:paddingStart="8dp"
+                tools:ignore="RtlSymmetry">
                 <TextView
-                    android:text="Team #"
+                    android:text="@string/team"
                     android:textStyle="bold"
                     android:textColor="#FF8C42"
                     android:layout_width="wrap_content"
@@ -98,24 +101,26 @@
                     android:id="@+id/teamNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:autofillHints=""
                     android:inputType="number"
                     android:textColor="#FF8C42"
                     android:textColorHint="#AA6A35"
                     android:background="@null"
-                    android:paddingBottom="8dp"/>
+                    android:paddingBottom="8dp"
+                    tools:ignore="LabelFor" />
             </LinearLayout>
         </LinearLayout>
 
-        //separator
+        //seperator
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#4A2F1F"
             android:layout_marginBottom="16dp"/>
 
-        //autonomous
+        //auto
         <TextView
-            android:text="Autonomous"
+            android:text="@string/autonomous"
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="#FF8C42"
@@ -132,26 +137,117 @@
             android:paddingBottom="12dp">
             <CheckBox
                 android:id="@+id/autoL1Hang"
-                android:text="L1 Hang"
+                android:text="@string/l1_hang"
                 android:textColor="#FF8C42"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="32dp"/>
+                android:paddingEnd="32dp"
+                tools:ignore="RtlSymmetry" />
             <CheckBox
                 android:id="@+id/autoBallCollector"
-                android:text="Ball Collector"
+                android:text="@string/ball_collector"
                 android:textColor="#FF8C42"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <TextView
-            android:text="Fuel Scored"
+            android:text="@string/fuel_scored"
             android:textColor="#FF8C42"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="8dp"/>
+
+        //auto fuel counter
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="16dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingHorizontal="8dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/autoFuelMinus3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="-3"
+                    android:textSize="14sp"
+                    android:textColor="#0D0603"
+                    android:layout_marginEnd="8dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    app:elevation="4dp"
+                    app:backgroundTint="#FF8C42"
+                    app:cornerRadius="20dp"
+                    android:contentDescription="Decrease by 3"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/autoFuelMinus1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="-1"
+                    android:textSize="14sp"
+                    android:textColor="#0D0603"
+                    android:layout_marginEnd="8dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    app:elevation="4dp"
+                    app:backgroundTint="#FF8C42"
+                    app:cornerRadius="20dp"
+                    android:contentDescription="Decrease by 1"/>
+
+                <TextView
+                    android:id="@+id/autoFuel1"
+                    android:text="0"
+                    android:textColor="#FF8C42"
+                    android:layout_width="36dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:layout_marginHorizontal="8dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/autoFuelPlus1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="+1"
+                    android:textSize="14sp"
+                    android:textColor="#0D0603"
+                    android:layout_marginEnd="8dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    app:elevation="4dp"
+                    app:backgroundTint="#FF8C42"
+                    app:cornerRadius="20dp"
+                    android:contentDescription="Increase by 1"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/autoFuelPlus3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="+3"
+                    android:textSize="14sp"
+                    android:textColor="#0D0603"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    app:elevation="4dp"
+                    app:backgroundTint="#FF8C42"
+                    app:cornerRadius="20dp"
+                    android:contentDescription="Increase by 3"/>
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
@@ -160,6 +256,7 @@
             android:gravity="center"
             android:paddingBottom="16dp">
             <LinearLayout
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -174,7 +271,7 @@
                     android:gravity="center"
                     android:paddingHorizontal="8dp">
                     <TextView
-                        android:text="1"
+                        android:text="Bump"
                         android:textColor="#FF8C42"
                         android:gravity="center"
                         android:layout_width="match_parent"
@@ -186,9 +283,10 @@
                         android:layout_height="wrap_content"
                         android:gravity="center">
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/autoFuelPlus1"
+                            android:id="@+id/autoBumpPlus1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:contentDescription="TODO"
                             app:srcCompat="@android:drawable/ic_input_add"
                             app:fabCustomSize="40dp"
                             android:layout_marginEnd="8dp"
@@ -204,7 +302,7 @@
                             android:gravity="center"
                             android:textSize="18sp"/>
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/autoFuelMinus1"
+                            android:id="@+id/autoBumpMinus1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:srcCompat="@drawable/ic_minus"
@@ -223,7 +321,7 @@
                     android:gravity="center"
                     android:paddingHorizontal="8dp">
                     <TextView
-                        android:text="3"
+                        android:text="Trench"
                         android:textColor="#FF8C42"
                         android:gravity="center"
                         android:layout_width="match_parent"
@@ -235,7 +333,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center">
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/autoFuelPlus3"
+                            android:id="@+id/autoTrenchPlus1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:srcCompat="@android:drawable/ic_input_add"
@@ -253,7 +351,7 @@
                             android:gravity="center"
                             android:textSize="18sp"/>
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/autoFuelMinus3"
+                            android:id="@+id/autoTrenchMinus1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:srcCompat="@drawable/ic_minus"
@@ -271,107 +369,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:weightSum="2">
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingHorizontal="8dp">
-                    <TextView
-                        android:text="5"
-                        android:textColor="#FF8C42"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"/>
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/autoFuelPlus5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@android:drawable/ic_input_add"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginEnd="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                        <TextView
-                            android:id="@+id/autoFuel5"
-                            android:text="0"
-                            android:textColor="#FF8C42"
-                            android:layout_width="36dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textSize="18sp"/>
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/autoFuelMinus5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_minus"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginStart="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingHorizontal="8dp">
-                    <TextView
-                        android:text="7"
-                        android:textColor="#FF8C42"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"/>
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/autoFuelPlus7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@android:drawable/ic_input_add"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginEnd="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                        <TextView
-                            android:id="@+id/autoFuel7"
-                            android:text="0"
-                            android:textColor="#FF8C42"
-                            android:layout_width="36dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textSize="18sp"/>
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/autoFuelMinus7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_minus"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginStart="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                    </LinearLayout>
-                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
-
 
         <View
             android:layout_width="match_parent"
@@ -398,234 +398,566 @@
             android:layout_height="wrap_content"
             android:paddingBottom="8dp"/>
 
+        //teleop fuel
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingBottom="16dp">
-            <!-- Row 1: 1 and 3 point -->
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingBottom="16dp"
-                android:weightSum="2">
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
+                android:paddingHorizontal="8dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/teleFuelMinus3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="-3"
+                    android:textSize="14sp"
+                    android:textColor="#0D0603"
+                    android:layout_marginEnd="8dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    app:elevation="4dp"
+                    app:backgroundTint="#FF8C42"
+                    app:cornerRadius="20dp"
+                    android:contentDescription="Decrease by 3"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/teleFuelMinus1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="-1"
+                    android:textSize="14sp"
+                    android:textColor="#0D0603"
+                    android:layout_marginEnd="8dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    app:elevation="4dp"
+                    app:backgroundTint="#FF8C42"
+                    app:cornerRadius="20dp"
+                    android:contentDescription="Decrease by 1"/>
+
+                <TextView
+                    android:id="@+id/teleFuel1"
+                    android:text="0"
+                    android:textColor="#FF8C42"
+                    android:layout_width="36dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:gravity="center"
-                    android:paddingHorizontal="8dp">
-                    <TextView
-                        android:text="1"
-                        android:textColor="#FF8C42"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"/>
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/teleFuelPlus1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@android:drawable/ic_input_add"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginEnd="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                        <TextView
-                            android:id="@+id/teleFuel1"
-                            android:text="0"
-                            android:textColor="#FF8C42"
-                            android:layout_width="36dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textSize="18sp"/>
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/teleFuelMinus1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_minus"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginStart="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
+                    android:textSize="18sp"
+                    android:layout_marginHorizontal="8dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/teleFuelPlus1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="+1"
+                    android:textSize="14sp"
+                    android:textColor="#0D0603"
+                    android:layout_marginEnd="8dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    app:elevation="4dp"
+                    app:backgroundTint="#FF8C42"
+                    app:cornerRadius="20dp"
+                    android:contentDescription="Increase by 1"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/teleFuelPlus3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="+3"
+                    android:textSize="14sp"
+                    android:textColor="#0D0603"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    app:elevation="4dp"
+                    app:backgroundTint="#FF8C42"
+                    app:cornerRadius="20dp"
+                    android:contentDescription="Increase by 3"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="16dp"
+            android:weightSum="2">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingHorizontal="8dp">
+                <TextView
+                    android:text="Bump"
+                    android:textColor="#FF8C42"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingHorizontal="8dp">
+                    android:paddingBottom="8dp"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/teleBumpPlus1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="TODO"
+                        app:srcCompat="@android:drawable/ic_input_add"
+                        app:fabCustomSize="40dp"
+                        android:layout_marginEnd="8dp"
+                        app:elevation="4dp"
+                        app:backgroundTint="#FF8C42"
+                        app:tint="#0D0603"/>
                     <TextView
-                        android:text="3"
+                        android:id="@+id/autoFuel1"
+                        android:text="0"
                         android:textColor="#FF8C42"
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:layout_width="match_parent"
+                        android:textSize="18sp"/>
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/teleBumpMinus1"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"/>
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/teleFuelPlus3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@android:drawable/ic_input_add"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginEnd="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                        <TextView
-                            android:id="@+id/teleFuel3"
-                            android:text="0"
-                            android:textColor="#FF8C42"
-                            android:layout_width="36dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textSize="18sp"/>
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/teleFuelMinus3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_minus"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginStart="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                    </LinearLayout>
+                        app:srcCompat="@drawable/ic_minus"
+                        app:fabCustomSize="40dp"
+                        android:layout_marginStart="8dp"
+                        app:elevation="4dp"
+                        app:backgroundTint="#FF8C42"
+                        app:tint="#0D0603"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:weightSum="2">
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                android:paddingHorizontal="8dp">
+                <TextView
+                    android:text="Trench"
+                    android:textColor="#FF8C42"
                     android:gravity="center"
-                    android:paddingHorizontal="8dp">
-                    <TextView
-                        android:text="5"
-                        android:textColor="#FF8C42"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"/>
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/teleFuelPlus5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@android:drawable/ic_input_add"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginEnd="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                        <TextView
-                            android:id="@+id/teleFuel5"
-                            android:text="0"
-                            android:textColor="#FF8C42"
-                            android:layout_width="36dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textSize="18sp"/>
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/teleFuelMinus5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_minus"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginStart="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingHorizontal="8dp">
+                    android:paddingBottom="8dp"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/teleTrenchPlus1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@android:drawable/ic_input_add"
+                        app:fabCustomSize="40dp"
+                        android:layout_marginEnd="8dp"
+                        app:elevation="4dp"
+                        app:backgroundTint="#FF8C42"
+                        app:tint="#0D0603"/>
                     <TextView
-                        android:text="7"
+                        android:id="@+id/teleTrench"
+                        android:text="0"
                         android:textColor="#FF8C42"
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:layout_width="match_parent"
+                        android:textSize="18sp"/>
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/teleTrenchMinus1"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"/>
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/teleFuelPlus7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@android:drawable/ic_input_add"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginEnd="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                        <TextView
-                            android:id="@+id/teleFuel7"
-                            android:text="0"
-                            android:textColor="#FF8C42"
-                            android:layout_width="36dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textSize="18sp"/>
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/teleFuelMinus7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_minus"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginStart="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                    </LinearLayout>
+                        app:srcCompat="@drawable/ic_minus"
+                        app:fabCustomSize="40dp"
+                        android:layout_marginStart="8dp"
+                        app:elevation="4dp"
+                        app:backgroundTint="#FF8C42"
+                        app:tint="#0D0603"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
+        //putcharthere
 
-        <View
+        <?xml version="1.0" encoding="utf-8"?>
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#4A2F1F"
-            android:layout_marginBottom="16dp"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            >
 
-        //endgame
+            <!-- Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Match Share"
+                android:textSize="18sp"
+                android:textColor="#FF8C42"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Table Container -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/table_border">
+
+                <!-- Header Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Shift"
+                        android:textColor="#FF8C42"
+                        android:textStyle="bold"
+                        android:textSize="13sp"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Passing"
+                        android:textColor="#FF8C42"
+                        android:textStyle="bold"
+                        android:textSize="13sp"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Defense"
+                        android:textColor="#FF8C42"
+                        android:textStyle="bold"
+                        android:textSize="13sp"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Scoring"
+                        android:textColor="#FF8C42"
+                        android:textStyle="bold"
+                        android:textSize="13sp"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Cycling"
+                        android:textColor="#FF8C42"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:gravity="center"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#FF6600"/>
+
+                <!-- Shift 1 Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Shift 1"
+                        android:textColor="#FF8C42"
+                        android:textSize="14sp"/>
+
+                    <CheckBox
+                        android:id="@+id/shift1_passing"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+
+                    <CheckBox
+                        android:id="@+id/shift1_defense"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+
+                    <CheckBox
+                        android:id="@+id/shift1_scoring"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+
+                    <CheckBox
+                        android:id="@+id/shift1_cycling"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+                </LinearLayout>
+
+                <!-- Shift 2 Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Shift 2"
+                        android:textColor="#FF8C42"
+                        android:textSize="14sp"/>
+
+                    <CheckBox
+                        android:id="@+id/shift2_passing"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+
+                    <CheckBox
+                        android:id="@+id/shift2_defense"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+
+                    <CheckBox
+                        android:id="@+id/shift2_scoring"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+
+                    <CheckBox
+                        android:id="@+id/shift2_cycling"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+                </LinearLayout>
+
+                <!-- Shift 3 Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Shift 3"
+                        android:textColor="#FF8C42"
+                        android:textSize="14sp"/>
+
+                    <CheckBox
+                        android:id="@+id/shift3_passing"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+
+                    <CheckBox
+                        android:id="@+id/shift3_defense"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+
+                    <CheckBox
+                        android:id="@+id/shift3_scoring"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+
+                    <CheckBox
+                        android:id="@+id/shift3_cycling"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+                </LinearLayout>
+
+                <!-- Shift 4 Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Shift 4"
+                        android:textColor="#FF8C42"
+                        android:textSize="14sp"/>
+
+                    <CheckBox
+                        android:id="@+id/shift4_passing"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+
+                    <CheckBox
+                        android:id="@+id/shift4_defense"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+
+                    <CheckBox
+                        android:id="@+id/shift4_scoring"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+
+                    <CheckBox
+                        android:id="@+id/shift4_cycling"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+                </LinearLayout>
+
+                <!-- Endgame Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Endgame"
+                        android:textColor="#FF8C42"
+                        android:textSize="14sp"/>
+
+                    <CheckBox
+                        android:id="@+id/endgame_passing"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+
+                    <CheckBox
+                        android:id="@+id/endgame_defense"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+
+                    <CheckBox
+                        android:id="@+id/endgame_scoring"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+
+                    <CheckBox
+                        android:id="@+id/endgame_cycling"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:buttonTint="#FF8C42"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+
+        //endgame fuel
         <TextView
             android:text="Endgame"
             android:textStyle="bold"
@@ -636,236 +968,9 @@
             android:layout_height="wrap_content"
             android:paddingBottom="12dp"/>
 
-        <TextView
-            android:text="Fuel Scored"
-            android:textColor="#FF8C42"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="8dp"/>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="16dp">
-            <!-- Row 1: 1 and 3 point -->
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="16dp"
-                android:weightSum="2">
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingHorizontal="8dp">
-                    <TextView
-                        android:text="1"
-                        android:textColor="#FF8C42"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"/>
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/endFuelPlus1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@android:drawable/ic_input_add"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginEnd="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                        <TextView
-                            android:id="@+id/endFuel1"
-                            android:text="0"
-                            android:textColor="#FF8C42"
-                            android:layout_width="36dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textSize="18sp"/>
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/endFuelMinus1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_minus"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginStart="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingHorizontal="8dp">
-                    <TextView
-                        android:text="3"
-                        android:textColor="#FF8C42"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"/>
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/endFuelPlus3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@android:drawable/ic_input_add"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginEnd="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                        <TextView
-                            android:id="@+id/endFuel3"
-                            android:text="0"
-                            android:textColor="#FF8C42"
-                            android:layout_width="36dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textSize="18sp"/>
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/endFuelMinus3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_minus"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginStart="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:weightSum="2">
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingHorizontal="8dp">
-                    <TextView
-                        android:text="5"
-                        android:textColor="#FF8C42"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"/>
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/endFuelPlus5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@android:drawable/ic_input_add"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginEnd="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                        <TextView
-                            android:id="@+id/endFuel5"
-                            android:text="0"
-                            android:textColor="#FF8C42"
-                            android:layout_width="36dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textSize="18sp"/>
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/endFuelMinus5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_minus"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginStart="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingHorizontal="8dp">
-                    <TextView
-                        android:text="7"
-                        android:textColor="#FF8C42"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"/>
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/endFuelPlus7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@android:drawable/ic_input_add"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginEnd="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                        <TextView
-                            android:id="@+id/endFuel7"
-                            android:text="0"
-                            android:textColor="#FF8C42"
-                            android:layout_width="36dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textSize="18sp"/>
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/endFuelMinus7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_minus"
-                            app:fabCustomSize="40dp"
-                            android:layout_marginStart="8dp"
-                            app:elevation="4dp"
-                            app:backgroundTint="#FF8C42"
-                            app:tint="#0D0603"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-
+        //endgame fuel
         <RadioGroup
-            android:id="@+id/endgameRadioGroup"
+            android:id="@+id/hangRadioGroup"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -875,7 +980,7 @@
 
             <RadioButton
                 android:id="@+id/endNoHang"
-                android:text="No hang"
+                android:text="@string/no_hang"
                 android:textColor="#FF8C42"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -889,18 +994,84 @@
 
             <RadioButton
                 android:id="@+id/endL2"
-                android:text="L2 Hang"
+                android:text="@string/l2_hang"
                 android:textColor="#FF8C42"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <RadioButton
                 android:id="@+id/endL3"
-                android:text="L3 Hang"
+                android:text="@string/l3_hang"
                 android:textColor="#FF8C42"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/positionRadioGroup"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:paddingTop="8dp">
+
+            <RadioButton
+                android:id="@+id/none"
+                android:text="N/A"
+                android:textColor="#FF8C42"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <RadioButton
+                android:id="@+id/endcenter"
+                android:text="Center"
+                android:textColor="#FF8C42"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <RadioButton
+                android:id="@+id/endleft"
+                android:text="Left"
+                android:textColor="#FF8C42"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <RadioButton
+                android:id="@+id/endright"
+                android:text="Right"
+                android:textColor="#FF8C42"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <RadioButton
+                android:id="@+id/endback"
+                android:text="Back"
+                android:textColor="#FF8C42"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RadioGroup>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Comments:"
+            android:textSize="18sp"
+            android:textColor="#FF8C42"
+            android:gravity="center"
+            android:paddingBottom="12dp" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/Comments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:inputType="text"
+            android:textColor="#FF8C42"
+            android:textColorHint="#AA6A35"
+            android:background="@null"
+            android:paddingBottom="8dp"
+            tools:ignore="LabelFor" />
 
 
     </LinearLayout>
