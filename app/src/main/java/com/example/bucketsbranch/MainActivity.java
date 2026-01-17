@@ -13,12 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Header
+
     EditText studentName;
     EditText matchNumber;
     EditText teamNumber;
 
-    // Autonomous
+    //auto
     CheckBox autoL1Hang;
     CheckBox autoBallCollector;
     TextView autoFuel1, autoFuel3, autoFuel5, autoFuel7;
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         matchNumber = findViewById(R.id.matchNumber);
         teamNumber = findViewById(R.id.teamNumber);
 
-        // Autonomous
+        //auto
         autoL1Hang = findViewById(R.id.autoL1Hang);
         autoBallCollector = findViewById(R.id.autoBallCollector);
         autoFuel1 = findViewById(R.id.autoFuel1);
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         autoFuelPlus7 = findViewById(R.id.autoFuelPlus7);
         autoFuelMinus7 = findViewById(R.id.autoFuelMinus7);
 
-        // TeleOp
+        // teleop
         teleFuel1 = findViewById(R.id.teleFuel1);
         teleFuel3 = findViewById(R.id.teleFuel3);
         teleFuel5 = findViewById(R.id.teleFuel5);

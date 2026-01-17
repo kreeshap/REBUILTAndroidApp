@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Title -->
+        //title
         <TextView
             android:text="@string/rebuilt_scouting_app"
             android:textSize="28sp"
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="16dp"/>
 
-        <!-- Header Row -->
+        //header
         <LinearLayout
             android:baselineAligned="false"
             android:orientation="horizontal"
@@ -106,14 +106,14 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Separator -->
+        //separator
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#4A2F1F"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Autonomous Section -->
+        //autonomous
         <TextView
             android:text="Autonomous"
             android:textStyle="bold"
@@ -159,7 +159,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingBottom="16dp">
-            <!-- Row 1: 1 and 3 point -->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -373,14 +372,14 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Separator -->
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#4A2F1F"
             android:layout_marginBottom="16dp"/>
 
-        <!-- TeleOp Section -->
+        //teleop
         <TextView
             android:text="TeleOp"
             android:textStyle="bold"
@@ -512,7 +511,6 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-            <!-- Row 2: 5 and 7 point -->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -620,14 +618,14 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Separator -->
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#4A2F1F"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Endgame Section -->
+        //endgame
         <TextView
             android:text="Endgame"
             android:textStyle="bold"
@@ -759,7 +757,6 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-            <!-- Row 2: 5 and 7 point -->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
