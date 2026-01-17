@@ -12,6 +12,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
+        <LinearLayout
+            android:id="@+id/topIconsLayout"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true">
+
+            <ImageButton
+                android:id="@+id/historyButton"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@android:drawable/ic_menu_recent_history"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:tint="#FF8C42"
+                android:contentDescription="History"
+                android:layout_marginEnd="8dp"
+                android:padding="4dp"/>
+
+            <ImageButton
+                android:id="@+id/settingsButton"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/settings"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:tint="#FF8C42"
+                android:contentDescription="Settings"
+                android:padding="4dp"/>
+
+        </LinearLayout>
+
         //title
         <TextView
             android:text="@string/rebuilt_scouting_app"

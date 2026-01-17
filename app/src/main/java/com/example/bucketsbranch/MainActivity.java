@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
 
+    ImageButton settingsButton;
     EditText studentName;
     EditText matchNumber;
     EditText teamNumber;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        settingsButton = findViewById(R.id.settingsButton);
         //header
         studentName = findViewById(R.id.studentName);
         matchNumber = findViewById(R.id.matchNumber);
@@ -242,4 +245,6 @@ public class MainActivity extends AppCompatActivity {
         endFuel5.setText(String.valueOf(endFuelCount5));
         endFuel7.setText(String.valueOf(endFuelCount7));
     }
+
+
 }
