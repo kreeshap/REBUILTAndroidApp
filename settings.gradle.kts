@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "BucketsBranch"
+rootProject.name = "REBUILTAndroidApp"
 include(":app")
  
