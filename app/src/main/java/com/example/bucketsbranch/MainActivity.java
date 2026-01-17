@@ -1,6 +1,9 @@
 package com.example.bucketsbranch;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -8,238 +11,453 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Header fields
+    private EditText studentName;
+    private EditText matchNumber;
+    private EditText teamNumber;
 
-    EditText studentName;
-    EditText matchNumber;
-    EditText teamNumber;
+    // Autonomous section
+    private CheckBox autoL1Hang;
+    private CheckBox autoBallCollector;
+    private TextView autoFuelDisplay;
+    private TextView autoBumpDisplay;
+    private TextView autoTrenchDisplay;
+    private MaterialButton autoFuelPlus1, autoFuelMinus1, autoFuelPlus3, autoFuelMinus3;
+    private FloatingActionButton autoBumpPlus, autoBumpMinus, autoTrenchPlus, autoTrenchMinus;
 
-    //auto
-    CheckBox autoL1Hang;
-    CheckBox autoBallCollector;
-    TextView autoFuel1, autoFuel3, autoFuel5, autoFuel7;
-    Button autoFuelPlus1, autoFuelMinus1;
-    Button autoFuelPlus3, autoFuelMinus3;
-    Button autoFuelPlus5, autoFuelMinus5;
-    Button autoFuelPlus7, autoFuelMinus7;
+    // TeleOp section
+    private TextView teleFuelDisplay;
+    private TextView teleBumpDisplay;
+    private TextView teleTrenchDisplay;
+    private MaterialButton teleFuelPlus1, teleFuelMinus1, teleFuelPlus3, teleFuelMinus3;
+    private FloatingActionButton teleBumpPlus, teleBumpMinus, teleTrenchPlus, teleTrenchMinus;
 
-    //teleop
-    TextView teleFuel1, teleFuel3, teleFuel5, teleFuel7;
-    Button teleFuelPlus1, teleFuelMinus1;
-    Button teleFuelPlus3, teleFuelMinus3;
-    Button teleFuelPlus5, teleFuelMinus5;
-    Button teleFuelPlus7, teleFuelMinus7;
+    // Match Share checkboxes
+    private CheckBox shift1Passing, shift1Defense, shift1Scoring, shift1Cycling;
+    private CheckBox shift2Passing, shift2Defense, shift2Scoring, shift2Cycling;
+    private CheckBox shift3Passing, shift3Defense, shift3Scoring, shift3Cycling;
+    private CheckBox shift4Passing, shift4Defense, shift4Scoring, shift4Cycling;
+    private CheckBox endgamePassingCB, endgameDefenseCB, endgameScoringCB, endgameCyclingCB;
 
-    //endgame
-    TextView endFuel1, endFuel3, endFuel5, endFuel7;
-    Button endFuelPlus1, endFuelMinus1;
-    Button endFuelPlus3, endFuelMinus3;
-    Button endFuelPlus5, endFuelMinus5;
-    Button endFuelPlus7, endFuelMinus7;
-    RadioGroup endgameRadioGroup;
-    RadioButton endNoHang, endL1, endL2, endL3;
+    // Endgame section
+    private RadioGroup hangRadioGroup;
+    private RadioGroup positionRadioGroup;
+    private RadioButton endNoHang, endL1, endL2, endL3;
+    private RadioButton positionNone, positionCenter, positionLeft, positionRight, positionBack;
 
-    //data
-    int autoFuelCount1 = 0, autoFuelCount3 = 0, autoFuelCount5 = 0, autoFuelCount7 = 0;
-    int teleFuelCount1 = 0, teleFuelCount3 = 0, teleFuelCount5 = 0, teleFuelCount7 = 0;
-    int endFuelCount1 = 0, endFuelCount3 = 0, endFuelCount5 = 0, endFuelCount7 = 0;
-    int endgameState = 0; // 0=no hang, 1=L1, 2=L2, 3=L3
+    // Comments
+    private EditText comments;
+
+    // Buttons
+    private Button submitButton;
+    private Button qrCodeButton;
+
+    // Data counters
+    private int autoFuelCount = 0;
+    private int autoBumpCount = 0;
+    private int autoTrenchCount = 0;
+    private int teleFuelCount = 0;
+    private int teleBumpCount = 0;
+    private int teleTrenchCount = 0;
+    private int hangState = 0; // 0=no hang, 1=L1, 2=L2, 3=L3
+    private int positionState = 0; // 0=N/A, 1=center, 2=left, 3=right, 4=back
+
+    // Global data storage
+    public static class GlobalDictionary {
+        public static HashMap<String, String> historyDict = new HashMap<>();
+        public static List<String> keyList = new ArrayList<>();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //header
+        initializeViews();
+        setupListeners();
+        updateAllDisplays();
+    }
+
+    private void initializeViews() {
+        // Header
         studentName = findViewById(R.id.studentName);
         matchNumber = findViewById(R.id.matchNumber);
         teamNumber = findViewById(R.id.teamNumber);
 
-        //auto
+        // Autonomous
         autoL1Hang = findViewById(R.id.autoL1Hang);
         autoBallCollector = findViewById(R.id.autoBallCollector);
-        autoFuel1 = findViewById(R.id.autoFuel1);
-        autoFuel3 = findViewById(R.id.autoFuel3);
-        autoFuel5 = findViewById(R.id.autoFuel5);
-        autoFuel7 = findViewById(R.id.autoFuel7);
+        autoFuelDisplay = findViewById(R.id.autoFuel1);
+        autoBumpDisplay = findViewById(R.id.autoFuel1); // Note: XML has duplicate IDs, using first occurrence
+        autoTrenchDisplay = findViewById(R.id.autoFuel3);
         autoFuelPlus1 = findViewById(R.id.autoFuelPlus1);
         autoFuelMinus1 = findViewById(R.id.autoFuelMinus1);
         autoFuelPlus3 = findViewById(R.id.autoFuelPlus3);
         autoFuelMinus3 = findViewById(R.id.autoFuelMinus3);
-        autoFuelPlus5 = findViewById(R.id.autoFuelPlus5);
-        autoFuelMinus5 = findViewById(R.id.autoFuelMinus5);
-        autoFuelPlus7 = findViewById(R.id.autoFuelPlus7);
-        autoFuelMinus7 = findViewById(R.id.autoFuelMinus7);
+        autoBumpPlus = findViewById(R.id.autoBumpPlus1);
+        autoBumpMinus = findViewById(R.id.autoBumpMinus1);
+        autoTrenchPlus = findViewById(R.id.autoTrenchPlus1);
+        autoTrenchMinus = findViewById(R.id.autoTrenchMinus1);
 
-        // teleop
-        teleFuel1 = findViewById(R.id.teleFuel1);
-        teleFuel3 = findViewById(R.id.teleFuel3);
-        teleFuel5 = findViewById(R.id.teleFuel5);
-        teleFuel7 = findViewById(R.id.teleFuel7);
+        // TeleOp
+        teleFuelDisplay = findViewById(R.id.teleFuel1);
+        teleBumpDisplay = findViewById(R.id.autoFuel1); // Note: XML has duplicate IDs
+        teleTrenchDisplay = findViewById(R.id.teleTrench);
         teleFuelPlus1 = findViewById(R.id.teleFuelPlus1);
         teleFuelMinus1 = findViewById(R.id.teleFuelMinus1);
         teleFuelPlus3 = findViewById(R.id.teleFuelPlus3);
         teleFuelMinus3 = findViewById(R.id.teleFuelMinus3);
-        teleFuelPlus5 = findViewById(R.id.teleFuelPlus5);
-        teleFuelMinus5 = findViewById(R.id.teleFuelMinus5);
-        teleFuelPlus7 = findViewById(R.id.teleFuelPlus7);
-        teleFuelMinus7 = findViewById(R.id.teleFuelMinus7);
+        teleBumpPlus = findViewById(R.id.teleBumpPlus1);
+        teleBumpMinus = findViewById(R.id.teleBumpMinus1);
+        teleTrenchPlus = findViewById(R.id.teleTrenchPlus1);
+        teleTrenchMinus = findViewById(R.id.teleTrenchMinus1);
 
-        //endgame
-        endFuel1 = findViewById(R.id.endFuel1);
-        endFuel3 = findViewById(R.id.endFuel3);
-        endFuel5 = findViewById(R.id.endFuel5);
-        endFuel7 = findViewById(R.id.endFuel7);
-        endFuelPlus1 = findViewById(R.id.endFuelPlus1);
-        endFuelMinus1 = findViewById(R.id.endFuelMinus1);
-        endFuelPlus3 = findViewById(R.id.endFuelPlus3);
-        endFuelMinus3 = findViewById(R.id.endFuelMinus3);
-        endFuelPlus5 = findViewById(R.id.endFuelPlus5);
-        endFuelMinus5 = findViewById(R.id.endFuelMinus5);
-        endFuelPlus7 = findViewById(R.id.endFuelPlus7);
-        endFuelMinus7 = findViewById(R.id.endFuelMinus7);
-        endgameRadioGroup = findViewById(R.id.endgameRadioGroup);
+        // Match Share checkboxes
+        shift1Passing = findViewById(R.id.shift1_passing);
+        shift1Defense = findViewById(R.id.shift1_defense);
+        shift1Scoring = findViewById(R.id.shift1_scoring);
+        shift1Cycling = findViewById(R.id.shift1_cycling);
+
+        shift2Passing = findViewById(R.id.shift2_passing);
+        shift2Defense = findViewById(R.id.shift2_defense);
+        shift2Scoring = findViewById(R.id.shift2_scoring);
+        shift2Cycling = findViewById(R.id.shift2_cycling);
+
+        shift3Passing = findViewById(R.id.shift3_passing);
+        shift3Defense = findViewById(R.id.shift3_defense);
+        shift3Scoring = findViewById(R.id.shift3_scoring);
+        shift3Cycling = findViewById(R.id.shift3_cycling);
+
+        shift4Passing = findViewById(R.id.shift4_passing);
+        shift4Defense = findViewById(R.id.shift4_defense);
+        shift4Scoring = findViewById(R.id.shift4_scoring);
+        shift4Cycling = findViewById(R.id.shift4_cycling);
+
+        endgamePassingCB = findViewById(R.id.endgame_passing);
+        endgameDefenseCB = findViewById(R.id.endgame_defense);
+        endgameScoringCB = findViewById(R.id.endgame_scoring);
+        endgameCyclingCB = findViewById(R.id.endgame_cycling);
+
+        // Endgame
+        hangRadioGroup = findViewById(R.id.hangRadioGroup);
+        positionRadioGroup = findViewById(R.id.positionRadioGroup);
         endNoHang = findViewById(R.id.endNoHang);
         endL1 = findViewById(R.id.endL1);
         endL2 = findViewById(R.id.endL2);
         endL3 = findViewById(R.id.endL3);
+        positionNone = findViewById(R.id.none);
+        positionCenter = findViewById(R.id.endcenter);
+        positionLeft = findViewById(R.id.endleft);
+        positionRight = findViewById(R.id.endright);
+        positionBack = findViewById(R.id.endback);
 
-        // click listeners
-        setAutoFuelListeners();
-        setTeleFuelListeners();
-        setEndFuelListeners();
+        // Comments
+        comments = findViewById(R.id.Comments);
 
-        updateDisplays();
+        // Buttons
+        submitButton = findViewById(R.id.submitButton);
+        qrCodeButton = findViewById(R.id.qrCodeButton);
     }
 
- //autonomous fuel
+    private void setupListeners() {
+        // Autonomous fuel counters
+        autoFuelPlus1.setOnClickListener(v -> modifyCounter("autoFuel", 1));
+        autoFuelMinus1.setOnClickListener(v -> modifyCounter("autoFuel", -1));
+        autoFuelPlus3.setOnClickListener(v -> modifyCounter("autoFuel", 3));
+        autoFuelMinus3.setOnClickListener(v -> modifyCounter("autoFuel", -3));
 
-    private void setAutoFuelListeners() {
-        autoFuelPlus1.setOnClickListener(v -> autoFuelPlus(1));
-        autoFuelMinus1.setOnClickListener(v -> autoFuelMinus(1));
-        autoFuelPlus3.setOnClickListener(v -> autoFuelPlus(3));
-        autoFuelMinus3.setOnClickListener(v -> autoFuelMinus(3));
-        autoFuelPlus5.setOnClickListener(v -> autoFuelPlus(5));
-        autoFuelMinus5.setOnClickListener(v -> autoFuelMinus(5));
-        autoFuelPlus7.setOnClickListener(v -> autoFuelPlus(7));
-        autoFuelMinus7.setOnClickListener(v -> autoFuelMinus(7));
+        // Autonomous bump/trench counters
+        autoBumpPlus.setOnClickListener(v -> modifyCounter("autoBump", 1));
+        autoBumpMinus.setOnClickListener(v -> modifyCounter("autoBump", -1));
+        autoTrenchPlus.setOnClickListener(v -> modifyCounter("autoTrench", 1));
+        autoTrenchMinus.setOnClickListener(v -> modifyCounter("autoTrench", -1));
+
+        // TeleOp fuel counters
+        teleFuelPlus1.setOnClickListener(v -> modifyCounter("teleFuel", 1));
+        teleFuelMinus1.setOnClickListener(v -> modifyCounter("teleFuel", -1));
+        teleFuelPlus3.setOnClickListener(v -> modifyCounter("teleFuel", 3));
+        teleFuelMinus3.setOnClickListener(v -> modifyCounter("teleFuel", -3));
+
+        // TeleOp bump/trench counters
+        teleBumpPlus.setOnClickListener(v -> modifyCounter("teleBump", 1));
+        teleBumpMinus.setOnClickListener(v -> modifyCounter("teleBump", -1));
+        teleTrenchPlus.setOnClickListener(v -> modifyCounter("teleTrench", 1));
+        teleTrenchMinus.setOnClickListener(v -> modifyCounter("teleTrench", -1));
+
+        // Hang radio group
+        hangRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.endNoHang) hangState = 0;
+            else if (checkedId == R.id.endL1) hangState = 1;
+            else if (checkedId == R.id.endL2) hangState = 2;
+            else if (checkedId == R.id.endL3) hangState = 3;
+        });
+
+        // Position radio group
+        positionRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.none) positionState = 0;
+            else if (checkedId == R.id.endcenter) positionState = 1;
+            else if (checkedId == R.id.endleft) positionState = 2;
+            else if (checkedId == R.id.endright) positionState = 3;
+            else if (checkedId == R.id.endback) positionState = 4;
+        });
+
+        // Submit and QR Code buttons
+        submitButton.setOnClickListener(v -> onSubmit());
+        qrCodeButton.setOnClickListener(v -> generateQRCode());
     }
 
-    private void autoFuelPlus(int value) {
-        switch (value) {
-            case 1: autoFuelCount1++; break;
-            case 3: autoFuelCount3++; break;
-            case 5: autoFuelCount5++; break;
-            case 7: autoFuelCount7++; break;
+    private void modifyCounter(String counterType, int delta) {
+        switch (counterType) {
+            case "autoFuel":
+                autoFuelCount = Math.max(0, autoFuelCount + delta);
+                break;
+            case "autoBump":
+                autoBumpCount = Math.max(0, autoBumpCount + delta);
+                break;
+            case "autoTrench":
+                autoTrenchCount = Math.max(0, autoTrenchCount + delta);
+                break;
+            case "teleFuel":
+                teleFuelCount = Math.max(0, teleFuelCount + delta);
+                break;
+            case "teleBump":
+                teleBumpCount = Math.max(0, teleBumpCount + delta);
+                break;
+            case "teleTrench":
+                teleTrenchCount = Math.max(0, teleTrenchCount + delta);
+                break;
         }
-        updateDisplays();
+        updateAllDisplays();
     }
 
-    private void autoFuelMinus(int value) {
-        switch (value) {
-            case 1: if (autoFuelCount1 > 0) autoFuelCount1--; break;
-            case 3: if (autoFuelCount3 > 0) autoFuelCount3--; break;
-            case 5: if (autoFuelCount5 > 0) autoFuelCount5--; break;
-            case 7: if (autoFuelCount7 > 0) autoFuelCount7--; break;
+    private void updateAllDisplays() {
+        autoFuelDisplay.setText(String.valueOf(autoFuelCount));
+        autoBumpDisplay.setText(String.valueOf(autoBumpCount));
+        autoTrenchDisplay.setText(String.valueOf(autoTrenchCount));
+        teleFuelDisplay.setText(String.valueOf(teleFuelCount));
+        teleBumpDisplay.setText(String.valueOf(teleBumpCount));
+        teleTrenchDisplay.setText(String.valueOf(teleTrenchCount));
+    }
+
+    private boolean validateFields() {
+        String missingFields = "";
+
+        if (studentName.getText().toString().trim().isEmpty()) {
+            missingFields += "\n\t• Student Name";
         }
-        updateDisplays();
-    }
-
-//teleop fuel
-
-    private void setTeleFuelListeners() {
-        teleFuelPlus1.setOnClickListener(v -> teleFuelPlus(1));
-        teleFuelMinus1.setOnClickListener(v -> teleFuelMinus(1));
-        teleFuelPlus3.setOnClickListener(v -> teleFuelPlus(3));
-        teleFuelMinus3.setOnClickListener(v -> teleFuelMinus(3));
-        teleFuelPlus5.setOnClickListener(v -> teleFuelPlus(5));
-        teleFuelMinus5.setOnClickListener(v -> teleFuelMinus(5));
-        teleFuelPlus7.setOnClickListener(v -> teleFuelPlus(7));
-        teleFuelMinus7.setOnClickListener(v -> teleFuelMinus(7));
-    }
-
-    private void teleFuelPlus(int value) {
-        switch (value) {
-            case 1: teleFuelCount1++; break;
-            case 3: teleFuelCount3++; break;
-            case 5: teleFuelCount5++; break;
-            case 7: teleFuelCount7++; break;
+        if (teamNumber.getText().toString().trim().isEmpty()) {
+            missingFields += "\n\t• Team Number";
         }
-        updateDisplays();
-    }
-
-    private void teleFuelMinus(int value) {
-        switch (value) {
-            case 1: if (teleFuelCount1 > 0) teleFuelCount1--; break;
-            case 3: if (teleFuelCount3 > 0) teleFuelCount3--; break;
-            case 5: if (teleFuelCount5 > 0) teleFuelCount5--; break;
-            case 7: if (teleFuelCount7 > 0) teleFuelCount7--; break;
+        if (matchNumber.getText().toString().trim().isEmpty()) {
+            missingFields += "\n\t• Match Number";
         }
-        updateDisplays();
-    }
 
-//endgame fuel
-
-    private void setEndFuelListeners() {
-        endFuelPlus1.setOnClickListener(v -> endFuelPlus(1));
-        endFuelMinus1.setOnClickListener(v -> endFuelMinus(1));
-        endFuelPlus3.setOnClickListener(v -> endFuelPlus(3));
-        endFuelMinus3.setOnClickListener(v -> endFuelMinus(3));
-        endFuelPlus5.setOnClickListener(v -> endFuelPlus(5));
-        endFuelMinus5.setOnClickListener(v -> endFuelMinus(5));
-        endFuelPlus7.setOnClickListener(v -> endFuelPlus(7));
-        endFuelMinus7.setOnClickListener(v -> endFuelMinus(7));
-    }
-
-    private void endFuelPlus(int value) {
-        switch (value) {
-            case 1: endFuelCount1++; break;
-            case 3: endFuelCount3++; break;
-            case 5: endFuelCount5++; break;
-            case 7: endFuelCount7++; break;
+        if (!missingFields.isEmpty()) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Missing Information")
+                    .setMessage("Please fill in the following fields:" + missingFields)
+                    .setPositiveButton("OK", null)
+                    .show();
+            return false;
         }
-        updateDisplays();
+        return true;
     }
 
-    private void endFuelMinus(int value) {
-        switch (value) {
-            case 1: if (endFuelCount1 > 0) endFuelCount1--; break;
-            case 3: if (endFuelCount3 > 0) endFuelCount3--; break;
-            case 5: if (endFuelCount5 > 0) endFuelCount5--; break;
-            case 7: if (endFuelCount7 > 0) endFuelCount7--; break;
+    private String collectData() {
+        // Collect match share data
+        String shift1Data = getCheckboxValue(shift1Passing) + "," +
+                getCheckboxValue(shift1Defense) + "," +
+                getCheckboxValue(shift1Scoring) + "," +
+                getCheckboxValue(shift1Cycling);
+
+        String shift2Data = getCheckboxValue(shift2Passing) + "," +
+                getCheckboxValue(shift2Defense) + "," +
+                getCheckboxValue(shift2Scoring) + "," +
+                getCheckboxValue(shift2Cycling);
+
+        String shift3Data = getCheckboxValue(shift3Passing) + "," +
+                getCheckboxValue(shift3Defense) + "," +
+                getCheckboxValue(shift3Scoring) + "," +
+                getCheckboxValue(shift3Cycling);
+
+        String shift4Data = getCheckboxValue(shift4Passing) + "," +
+                getCheckboxValue(shift4Defense) + "," +
+                getCheckboxValue(shift4Scoring) + "," +
+                getCheckboxValue(shift4Cycling);
+
+        String endgameData = getCheckboxValue(endgamePassingCB) + "," +
+                getCheckboxValue(endgameDefenseCB) + "," +
+                getCheckboxValue(endgameScoringCB) + "," +
+                getCheckboxValue(endgameCyclingCB);
+
+        String commentText = comments.getText().toString().trim();
+        if (commentText.isEmpty()) {
+            commentText = "No comments";
         }
-        updateDisplays();
+        commentText = commentText.replace(",", ";"); // Replace commas to avoid CSV issues
+
+        return studentName.getText().toString() + "," +
+                matchNumber.getText().toString() + "," +
+                teamNumber.getText().toString() + "," +
+                getCheckboxValue(autoL1Hang) + "," +
+                getCheckboxValue(autoBallCollector) + "," +
+                autoFuelCount + "," +
+                autoBumpCount + "," +
+                autoTrenchCount + "," +
+                teleFuelCount + "," +
+                teleBumpCount + "," +
+                teleTrenchCount + "," +
+                shift1Data + "," +
+                shift2Data + "," +
+                shift3Data + "," +
+                shift4Data + "," +
+                endgameData + "," +
+                hangState + "," +
+                positionState + "," +
+                commentText;
     }
 
-//hang
-
-    public void endgameSelect(View v) {
-        if (endNoHang.isChecked()) endgameState = 0;
-        else if (endL1.isChecked()) endgameState = 1;
-        else if (endL2.isChecked()) endgameState = 2;
-        else if (endL3.isChecked()) endgameState = 3;
+    private int getCheckboxValue(CheckBox checkBox) {
+        return checkBox.isChecked() ? 1 : 0;
     }
 
-//ui
+    public void onSubmit() {
+        if (!validateFields()) {
+            return;
+        }
 
-    private void updateDisplays() {
-        autoFuel1.setText(String.valueOf(autoFuelCount1));
-        autoFuel3.setText(String.valueOf(autoFuelCount3));
-        autoFuel5.setText(String.valueOf(autoFuelCount5));
-        autoFuel7.setText(String.valueOf(autoFuelCount7));
+        new AlertDialog.Builder(this)
+                .setTitle("Confirm Submission")
+                .setMessage("Are you sure you want to submit this scouting data?")
+                .setPositiveButton("SUBMIT", (dialog, which) -> {
+                    String data = collectData();
 
-        teleFuel1.setText(String.valueOf(teleFuelCount1));
-        teleFuel3.setText(String.valueOf(teleFuelCount3));
-        teleFuel5.setText(String.valueOf(teleFuelCount5));
-        teleFuel7.setText(String.valueOf(teleFuelCount7));
+                    // Store in history
+                    String matchKey = matchNumber.getText().toString();
+                    GlobalDictionary.historyDict.put(matchKey, data);
+                    GlobalDictionary.keyList.add(matchKey);
 
-        endFuel1.setText(String.valueOf(endFuelCount1));
-        endFuel3.setText(String.valueOf(endFuelCount3));
-        endFuel5.setText(String.valueOf(endFuelCount5));
-        endFuel7.setText(String.valueOf(endFuelCount7));
+                    Log.d("ScoutingData", "Submitted: " + data);
+
+                    // You can add intent to navigate to DisplayActivity here
+                    // Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
+                    // intent.putExtra("data", data);
+                    // startActivity(intent);
+
+                    Toast.makeText(MainActivity.this, "Data submitted successfully!", Toast.LENGTH_SHORT).show();
+
+                    // Optionally reset form
+                    resetForm();
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    public void generateQRCode() {
+        if (!validateFields()) {
+            return;
+        }
+
+        String data = collectData();
+
+        try {
+            QRCodeWriter writer = new QRCodeWriter();
+            BitMatrix bitMatrix = writer.encode(data, BarcodeFormat.QR_CODE, 800, 800);
+            int width = bitMatrix.getWidth();
+            int height = bitMatrix.getHeight();
+            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    bitmap.setPixel(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+                }
+            }
+
+            // Convert bitmap to byte array for passing to QRCodeActivity
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+
+            // Launch QRCodeActivity with the bitmap and data
+            Intent intent = new Intent(MainActivity.this, QRCodeActivity.class);
+            intent.putExtra("qrBitmap", byteArray);
+            intent.putExtra("data", data);
+            startActivity(intent);
+
+        } catch (WriterException e) {
+            Log.e("QRCode", "Error generating QR code", e);
+            Toast.makeText(this, "Error generating QR code", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void resetForm() {
+        // Reset all counters
+        autoFuelCount = 0;
+        autoBumpCount = 0;
+        autoTrenchCount = 0;
+        teleFuelCount = 0;
+        teleBumpCount = 0;
+        teleTrenchCount = 0;
+        hangState = 0;
+        positionState = 0;
+
+        // Clear text fields (keep student name for convenience)
+        teamNumber.setText("");
+        matchNumber.setText("");
+        comments.setText("");
+
+        // Uncheck checkboxes
+        autoL1Hang.setChecked(false);
+        autoBallCollector.setChecked(false);
+
+        shift1Passing.setChecked(false);
+        shift1Defense.setChecked(false);
+        shift1Scoring.setChecked(false);
+        shift1Cycling.setChecked(false);
+
+        shift2Passing.setChecked(false);
+        shift2Defense.setChecked(false);
+        shift2Scoring.setChecked(false);
+        shift2Cycling.setChecked(false);
+
+        shift3Passing.setChecked(false);
+        shift3Defense.setChecked(false);
+        shift3Scoring.setChecked(false);
+        shift3Cycling.setChecked(false);
+
+        shift4Passing.setChecked(false);
+        shift4Defense.setChecked(false);
+        shift4Scoring.setChecked(false);
+        shift4Cycling.setChecked(false);
+
+        endgamePassingCB.setChecked(false);
+        endgameDefenseCB.setChecked(false);
+        endgameScoringCB.setChecked(false);
+        endgameCyclingCB.setChecked(false);
+
+        // Reset radio groups
+        hangRadioGroup.clearCheck();
+        positionRadioGroup.clearCheck();
+
+        updateAllDisplays();
     }
 }

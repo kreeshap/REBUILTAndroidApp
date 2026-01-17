@@ -607,7 +607,7 @@
             android:padding="16dp"
             >
 
-            <!-- Title -->
+            //title
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -618,14 +618,14 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"/>
 
-            <!-- Table Container -->
+            //table
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/table_border">
 
-                <!-- Header Row -->
+                //header
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -687,7 +687,7 @@
                     android:layout_height="2dp"
                     android:background="#FF6600"/>
 
-                <!-- Shift 1 Row -->
+                //shiftrow1
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -739,7 +739,7 @@
                         android:buttonTint="#FF8C42"/>
                 </LinearLayout>
 
-                <!-- Shift 2 Row -->
+                //shift2row
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -791,7 +791,7 @@
                         android:buttonTint="#FF8C42"/>
                 </LinearLayout>
 
-                <!-- Shift 3 Row -->
+                //shift 3 row
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -843,7 +843,7 @@
                         android:buttonTint="#FF8C42"/>
                 </LinearLayout>
 
-                <!-- Shift 4 Row -->
+                //shift 4 row
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -895,7 +895,7 @@
                         android:buttonTint="#FF8C42"/>
                 </LinearLayout>
 
-                <!-- Endgame Row -->
+                //endgame row
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -1073,6 +1073,55 @@
             android:paddingBottom="8dp"
             tools:ignore="LabelFor" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#4A2F1F"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"/>
+
+        //buttons
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="24dp"
+            android:weightSum="2">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/qrCodeButton"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="QR Code"
+                android:textSize="16sp"
+                android:textColor="#0D0603"
+                android:textStyle="bold"
+                app:backgroundTint="#FF8C42"
+                app:cornerRadius="8dp"
+                app:elevation="6dp"
+                android:onClick="generateQRCode"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/submitButton"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="Submit"
+                android:textSize="16sp"
+                android:textColor="#0D0603"
+                android:textStyle="bold"
+                app:backgroundTint="#FF8C42"
+                app:cornerRadius="8dp"
+                app:elevation="6dp"
+                android:onClick="onSubmit"/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
+
 </ScrollView>
