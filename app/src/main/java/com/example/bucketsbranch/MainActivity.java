@@ -1,6 +1,7 @@
 package com.example.bucketsbranch;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -22,6 +24,16 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Path;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -70,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
     // Buttons
     private Button submitButton;
     private Button qrCodeButton;
+    private ImageButton settingsButton;
+    private ImageButton historyButton;
 
     // Data counters
     private int autoFuelCount = 0;
@@ -78,8 +92,13 @@ public class MainActivity extends AppCompatActivity {
     private int teleFuelCount = 0;
     private int teleBumpCount = 0;
     private int teleTrenchCount = 0;
-    private int hangState = 0; // 0=no hang, 1=L1, 2=L2, 3=L3
-    private int positionState = 0; // 0=N/A, 1=center, 2=left, 3=right, 4=back
+    private int hangState = 0;
+    private int positionState = 0;
+
+    // Blue Alliance API
+    private BlueAllianceAPI blueAllianceAPI;
+    private static final String TBA_API_KEY = "YOUR_API_KEY_HERE";
+    private static final String TBA_BASE_URL = "https://www.thebluealliance.com/";
 
     // Global data storage
     public static class GlobalDictionary {
@@ -92,9 +111,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initializeBlueAllianceAPI();
         initializeViews();
         setupListeners();
         updateAllDisplays();
+    }
+
+    private void initializeBlueAllianceAPI() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(TBA_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        blueAllianceAPI = retrofit.create(BlueAllianceAPI.class);
     }
 
     private void initializeViews() {
@@ -103,12 +131,19 @@ public class MainActivity extends AppCompatActivity {
         matchNumber = findViewById(R.id.matchNumber);
         teamNumber = findViewById(R.id.teamNumber);
 
+        // Top buttons
+        settingsButton = findViewById(R.id.settingsButton);
+        historyButton = findViewById(R.id.historyButton);
+
         // Autonomous
         autoL1Hang = findViewById(R.id.autoL1Hang);
         autoBallCollector = findViewById(R.id.autoBallCollector);
         autoFuelDisplay = findViewById(R.id.autoFuel1);
-        autoBumpDisplay = findViewById(R.id.autoFuel1); // Note: XML has duplicate IDs, using first occurrence
-        autoTrenchDisplay = findViewById(R.id.autoFuel3);
+        autoBumpDisplay = findViewById(R.id.autoBumpDisplay);
+        autoTrenchDisplay = findViewById(R.id.autoTrenchDisplay);
+
+        // Student Name
+        studentName = findViewById(R.id.studentName);
         autoFuelPlus1 = findViewById(R.id.autoFuelPlus1);
         autoFuelMinus1 = findViewById(R.id.autoFuelMinus1);
         autoFuelPlus3 = findViewById(R.id.autoFuelPlus3);
@@ -120,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
         // TeleOp
         teleFuelDisplay = findViewById(R.id.teleFuel1);
-        teleBumpDisplay = findViewById(R.id.autoFuel1); // Note: XML has duplicate IDs
+        teleBumpDisplay = findViewById(R.id.teleBumpDisplay);
         teleTrenchDisplay = findViewById(R.id.teleTrench);
         teleFuelPlus1 = findViewById(R.id.teleFuelPlus1);
         teleFuelMinus1 = findViewById(R.id.teleFuelMinus1);
@@ -176,9 +211,35 @@ public class MainActivity extends AppCompatActivity {
         // Buttons
         submitButton = findViewById(R.id.submitButton);
         qrCodeButton = findViewById(R.id.qrCodeButton);
+
+        // Load saved settings from SharedPreferences
+        loadSettingsFromPreferences();
+    }
+
+    private void loadSettingsFromPreferences() {
+        SharedPreferences prefs = getSharedPreferences("ScoutingAppPrefs", MODE_PRIVATE);
+        String savedMatchNumber = prefs.getString("match_number", "");
+        String savedPosition = prefs.getString("position", "");
+
+        if (!savedMatchNumber.isEmpty()) {
+            matchNumber.setText(savedMatchNumber);
+        }
     }
 
     private void setupListeners() {
+        settingsButton.setOnClickListener(v -> openSettings());
+        historyButton.setOnClickListener(v -> openHistory());
+
+        matchNumber.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus && !matchNumber.getText().toString().isEmpty()) {
+                String matchNum = matchNumber.getText().toString();
+                String position = getSelectedPosition();
+                if (!position.isEmpty()) {
+                    fetchTeamNumber(matchNum, position);
+                }
+            }
+        });
+
         // Autonomous fuel counters
         autoFuelPlus1.setOnClickListener(v -> modifyCounter("autoFuel", 1));
         autoFuelMinus1.setOnClickListener(v -> modifyCounter("autoFuel", -1));
@@ -218,11 +279,105 @@ public class MainActivity extends AppCompatActivity {
             else if (checkedId == R.id.endleft) positionState = 2;
             else if (checkedId == R.id.endright) positionState = 3;
             else if (checkedId == R.id.endback) positionState = 4;
+
+            if (!matchNumber.getText().toString().isEmpty()) {
+                String matchNum = matchNumber.getText().toString();
+                String position = getSelectedPosition();
+                if (!position.isEmpty()) {
+                    fetchTeamNumber(matchNum, position);
+                }
+            }
         });
 
-        // Submit and QR Code buttons
         submitButton.setOnClickListener(v -> onSubmit());
         qrCodeButton.setOnClickListener(v -> generateQRCode());
+    }
+
+    private String getSelectedPosition() {
+        int checkedId = positionRadioGroup.getCheckedRadioButtonId();
+        if (checkedId == R.id.none) return "N/A";
+        else if (checkedId == R.id.endcenter) return "Center";
+        else if (checkedId == R.id.endleft) return "Left";
+        else if (checkedId == R.id.endright) return "Right";
+        else if (checkedId == R.id.endback) return "Back";
+        return "";
+    }
+
+    private void fetchTeamNumber(String matchNum, String position) {
+        String role = null;
+
+        if (position.equals("N/A")) {
+            Toast.makeText(this, "Please select a valid position", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        switch (positionRadioGroup.getCheckedRadioButtonId()) {
+            case R.id.endcenter:
+                role = "Red1";
+                break;
+            case R.id.endleft:
+                role = "Red2";
+                break;
+            case R.id.endright:
+                role = "Red3";
+                break;
+            default:
+                return;
+        }
+
+        String eventKey = "2024chpla";
+        Call<Match> call = blueAllianceAPI.getMatch(eventKey + "_" + matchNum, TBA_API_KEY);
+
+        call.enqueue(new Callback<Match>() {
+            @Override
+            public void onResponse(Call<Match> call, Response<Match> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Match match = response.body();
+                    String teamNum = extractTeamFromMatch(match, role);
+                    if (teamNum != null) {
+                        teamNumber.setText(teamNum);
+                        Toast.makeText(MainActivity.this, "Team fetched: " + teamNum, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Team not found for this position", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "Failed to fetch match data", Toast.LENGTH_SHORT).show();
+                    Log.e("BlueAlliance", "Response code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Match> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("BlueAlliance", "API Error", t);
+            }
+        });
+    }
+
+    private String extractTeamFromMatch(Match match, String role) {
+        if (match.alliances == null) return null;
+
+        if (role.startsWith("Red")) {
+            int index = Integer.parseInt(String.valueOf(role.charAt(3))) - 1;
+            if (match.alliances.red != null && match.alliances.red.teamKeys != null && index < match.alliances.red.teamKeys.size()) {
+                return match.alliances.red.teamKeys.get(index).replace("frc", "");
+            }
+        } else if (role.startsWith("Blue")) {
+            int index = Integer.parseInt(String.valueOf(role.charAt(4))) - 1;
+            if (match.alliances.blue != null && match.alliances.blue.teamKeys != null && index < match.alliances.blue.teamKeys.size()) {
+                return match.alliances.blue.teamKeys.get(index).replace("frc", "");
+            }
+        }
+        return null;
+    }
+
+    private void openSettings() {
+        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    private void openHistory() {
+        Toast.makeText(this, "History button clicked", Toast.LENGTH_SHORT).show();
     }
 
     private void modifyCounter(String counterType, int delta) {
@@ -283,7 +438,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String collectData() {
-        // Collect match share data
         String shift1Data = getCheckboxValue(shift1Passing) + "," +
                 getCheckboxValue(shift1Defense) + "," +
                 getCheckboxValue(shift1Scoring) + "," +
@@ -313,7 +467,7 @@ public class MainActivity extends AppCompatActivity {
         if (commentText.isEmpty()) {
             commentText = "No comments";
         }
-        commentText = commentText.replace(",", ";"); // Replace commas to avoid CSV issues
+        commentText = commentText.replace(",", ";");
 
         return studentName.getText().toString() + "," +
                 matchNumber.getText().toString() + "," +
@@ -350,22 +504,12 @@ public class MainActivity extends AppCompatActivity {
                 .setMessage("Are you sure you want to submit this scouting data?")
                 .setPositiveButton("SUBMIT", (dialog, which) -> {
                     String data = collectData();
-
-                    // Store in history
                     String matchKey = matchNumber.getText().toString();
                     GlobalDictionary.historyDict.put(matchKey, data);
                     GlobalDictionary.keyList.add(matchKey);
 
                     Log.d("ScoutingData", "Submitted: " + data);
-
-                    // You can add intent to navigate to DisplayActivity here
-                    // Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
-                    // intent.putExtra("data", data);
-                    // startActivity(intent);
-
                     Toast.makeText(MainActivity.this, "Data submitted successfully!", Toast.LENGTH_SHORT).show();
-
-                    // Optionally reset form
                     resetForm();
                 })
                 .setNegativeButton("Cancel", null)
@@ -392,12 +536,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            // Convert bitmap to byte array for passing to QRCodeActivity
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] byteArray = stream.toByteArray();
 
-            // Launch QRCodeActivity with the bitmap and data
             Intent intent = new Intent(MainActivity.this, QRCodeActivity.class);
             intent.putExtra("qrBitmap", byteArray);
             intent.putExtra("data", data);
@@ -410,7 +552,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void resetForm() {
-        // Reset all counters
         autoFuelCount = 0;
         autoBumpCount = 0;
         autoTrenchCount = 0;
@@ -420,12 +561,10 @@ public class MainActivity extends AppCompatActivity {
         hangState = 0;
         positionState = 0;
 
-        // Clear text fields (keep student name for convenience)
         teamNumber.setText("");
         matchNumber.setText("");
         comments.setText("");
 
-        // Uncheck checkboxes
         autoL1Hang.setChecked(false);
         autoBallCollector.setChecked(false);
 
@@ -454,10 +593,30 @@ public class MainActivity extends AppCompatActivity {
         endgameScoringCB.setChecked(false);
         endgameCyclingCB.setChecked(false);
 
-        // Reset radio groups
         hangRadioGroup.clearCheck();
         positionRadioGroup.clearCheck();
 
         updateAllDisplays();
+    }
+
+    // Blue Alliance API Interface
+    public interface BlueAllianceAPI {
+        @GET("api/v3/match/{matchKey}")
+        Call<Match> getMatch(@Path("matchKey") String matchKey, @Header("X-TBA-Auth-Key") String apiKey);
+    }
+
+    // Match Model
+    public static class Match {
+        public Alliances alliances;
+    }
+
+    public static class Alliances {
+        public Alliance red;
+        public Alliance blue;
+    }
+
+    public static class Alliance {
+        @SerializedName("team_keys")
+        public List<String> teamKeys;
     }
 }

@@ -40,8 +40,8 @@ public class SettingsActivity extends AppCompatActivity {
         scoutingTypeRadioGroup = findViewById(R.id.scoutingTypeRadioGroup);
         saveSettingsButton = findViewById(R.id.saveSettingsButton);
         backButton = findViewById(R.id.backButton);
-        scoutNameEditText = findViewById(R.id.scoutNameEditText);
-        matchNumberEditText = findViewById(R.id.matchNumberEditText);
+        scoutNameEditText = findViewById(R.id.scoutNameInput);
+        matchNumberEditText = findViewById(R.id.matchNumberInput);
         positionDropdown = findViewById(R.id.positionDropdown);
 
         // Setup position dropdown
@@ -95,11 +95,12 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void setupPositionDropdown() {
         String[] positions = {
-                "Center",
-                "Left",
-                "Right",
-                "Back",
-                "Not Applicable"
+                "Red1",
+                "Red2",
+                "Red3",
+                "Blue1",
+                "Blue2",
+                "Blue3"
         };
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
