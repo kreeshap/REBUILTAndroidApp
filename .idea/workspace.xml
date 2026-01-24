@@ -21,7 +21,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4e498da-3591-49c0-bdcc-fb0429e0a329" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -184,12 +183,12 @@
       <map>
         <entry key="com.example.bucketsbranch">
           <value>
-            <CheckInfo lastCheckTimestamp="1768664175196" />
+            <CheckInfo lastCheckTimestamp="1768770406054" />
           </value>
         </entry>
         <entry key="com.example.bucketsbranch.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1768664175194" />
+            <CheckInfo lastCheckTimestamp="1768770406055" />
           </value>
         </entry>
       </map>
