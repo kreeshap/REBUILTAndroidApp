@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +14,6 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 public class SettingsActivity extends AppCompatActivity {
 
     private RadioGroup themeRadioGroup;
-    private RadioGroup scoutingTypeRadioGroup;
     private MaterialButton saveSettingsButton;
     private MaterialButton backButton;
     private EditText scoutNameEditText;
@@ -22,22 +22,23 @@ public class SettingsActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private static final String PREFS_NAME = "ScoutingAppPrefs";
     private static final String THEME_KEY = "theme_mode";
-    private static final String SCOUTING_TYPE_KEY = "scouting_type";
     private static final String SCOUT_NAME_KEY = "scout_name";
     private static final String MATCH_NUMBER_KEY = "match_number";
     private static final String POSITION_KEY = "position";
 
+    private boolean themeChanged = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Apply saved theme before setting content view
+        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        applyTheme();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        // Initialize SharedPreferences
-        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-
         // Initialize UI elements
         themeRadioGroup = findViewById(R.id.themeRadioGroup);
-        scoutingTypeRadioGroup = findViewById(R.id.scoutingTypeRadioGroup);
         saveSettingsButton = findViewById(R.id.saveSettingsButton);
         backButton = findViewById(R.id.backButton);
         scoutNameEditText = findViewById(R.id.scoutNameInput);
@@ -50,11 +51,29 @@ public class SettingsActivity extends AppCompatActivity {
         // Load saved settings
         loadSettings();
 
+        // Track theme changes
+        themeRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            themeChanged = true;
+        });
+
         // Handle save button
         saveSettingsButton.setOnClickListener(v -> saveSettings());
 
         // Handle back button
         backButton.setOnClickListener(v -> finish());
+    }
+
+    /**
+     * Apply theme globally using AppCompat theme
+     */
+    private void applyTheme() {
+        String savedTheme = sharedPreferences.getString(THEME_KEY, "dark");
+
+        if (savedTheme.equals("light")) {
+            setTheme(R.style.Theme_BucketsBranch_Light);
+        } else {
+            setTheme(R.style.Theme_BucketsBranch_Dark);
+        }
     }
 
     private void loadSettings() {
@@ -64,21 +83,6 @@ public class SettingsActivity extends AppCompatActivity {
             findViewById(R.id.lightModeRadio).performClick();
         } else {
             findViewById(R.id.darkModeRadio).performClick();
-        }
-
-        // Load scouting type preference
-        String savedScoutingType = sharedPreferences.getString(SCOUTING_TYPE_KEY, "buckets");
-        switch (savedScoutingType) {
-            case "manual":
-                findViewById(R.id.manualRadio).performClick();
-                break;
-            case "slider":
-                findViewById(R.id.sliderRadio).performClick();
-                break;
-            case "buckets":
-            default:
-                findViewById(R.id.bucketsRadio).performClick();
-                break;
         }
 
         // Load scout information
@@ -117,21 +121,13 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Save theme preference
         int selectedThemeId = themeRadioGroup.getCheckedRadioButtonId();
+        String newTheme;
         if (selectedThemeId == R.id.darkModeRadio) {
-            editor.putString(THEME_KEY, "dark");
-        } else if (selectedThemeId == R.id.lightModeRadio) {
-            editor.putString(THEME_KEY, "light");
-        }
-
-        // Save scouting type preference
-        int selectedScoutingTypeId = scoutingTypeRadioGroup.getCheckedRadioButtonId();
-        if (selectedScoutingTypeId == R.id.manualRadio) {
-            editor.putString(SCOUTING_TYPE_KEY, "manual");
-        } else if (selectedScoutingTypeId == R.id.sliderRadio) {
-            editor.putString(SCOUTING_TYPE_KEY, "slider");
+            newTheme = "dark";
         } else {
-            editor.putString(SCOUTING_TYPE_KEY, "buckets");
+            newTheme = "light";
         }
+        editor.putString(THEME_KEY, newTheme);
 
         // Save scout information
         editor.putString(SCOUT_NAME_KEY, scoutNameEditText.getText().toString());
@@ -143,17 +139,20 @@ public class SettingsActivity extends AppCompatActivity {
         // Show confirmation toast
         Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show();
 
-        // Optional: finish activity after saving
-        finish();
+        // If theme changed, restart the activity to apply the new theme
+        if (themeChanged) {
+            // Finish and let MainActivity apply the new theme when user returns
+            finish();
+            // Optional: startActivity(new Intent(this, MainActivity.class));
+        } else {
+            finish();
+        }
     }
 
-    // Public method to get saved theme preference (use in MainActivity)
+    /**
+     * Static method to get saved theme (use in MainActivity)
+     */
     public static String getSavedTheme(SharedPreferences prefs) {
         return prefs.getString("theme_mode", "dark");
-    }
-
-    // Public method to get saved scouting type (use in MainActivity)
-    public static String getSavedScoutingType(SharedPreferences prefs) {
-        return prefs.getString("scouting_type", "buckets");
     }
 }

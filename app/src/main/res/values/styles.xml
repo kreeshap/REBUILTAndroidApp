@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark Mode Theme (Default) -->
+    <style name="Theme.BucketsBranch.Dark" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimary">#FF8C42</item>
+        <item name="colorPrimaryVariant">#D97A30</item>
+        <item name="colorSecondary">#FF8C42</item>
+        <item name="colorSecondaryVariant">#D97A30</item>
+        <item name="android:colorBackground">#0D0603</item>
+        <item name="colorSurface">#1A1410</item>
+        <item name="android:textColorPrimary">#FF8C42</item>
+        <item name="android:textColorSecondary">#AA6A35</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <!-- Light Mode Theme -->
+    <style name="Theme.BucketsBranch.Light" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#FF8C42</item>
+        <item name="colorPrimaryVariant">#D97A30</item>
+        <item name="colorSecondary">#FF8C42</item>
+        <item name="colorSecondaryVariant">#D97A30</item>
+        <item name="android:colorBackground">#FFFFFF</item>
+        <item name="colorSurface">#F5F5F5</item>
+        <item name="android:textColorPrimary">#1A1410</item>
+        <item name="android:textColorSecondary">#888888</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@android:color/white</item>
+    </style>
+</resources>

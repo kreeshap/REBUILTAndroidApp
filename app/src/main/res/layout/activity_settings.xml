@@ -36,15 +36,15 @@
                 android:insetRight="0dp"/>
 
             <TextView
-                android:text="Settings"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:textColor="#FF8C42"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:layout_marginStart="16dp"/>
+                android:text="Settings"
+                android:textColor="#FF8C42"
+                android:textSize="28sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -199,13 +199,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:paddingVertical="12dp">
+                    android:paddingVertical="2dp">
 
                     <RadioButton
                         android:id="@+id/darkModeRadio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:buttonTint="#FF8C42"/>
+                        android:buttonTint="#FF8C42"
+                        android:checked="true"/>
 
                     <TextView
                         android:text="Dark Mode"
@@ -214,7 +215,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginStart="12dp"/>
+                        android:layout_marginStart="2dp"/>
 
                 </LinearLayout>
 
@@ -223,7 +224,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:paddingVertical="12dp">
+                    android:paddingVertical="2dp">
 
                     <RadioButton
                         android:id="@+id/lightModeRadio"
@@ -238,197 +239,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginStart="12dp"/>
-
-                </LinearLayout>
-
-            </RadioGroup>
-
-        </LinearLayout>
-
-        <!-- Separator -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#4A2F1F"
-            android:layout_marginBottom="24dp"/>
-
-        <!-- Scouting Type Section -->
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="24dp">
-
-            <TextView
-                android:text="Scouting Input Type"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#FF8C42"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="12dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#4A2F1F"
-                android:layout_marginBottom="12dp"/>
-
-            <RadioGroup
-                android:id="@+id/scoutingTypeRadioGroup"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <!-- Buckets -->
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="12dp"
-                    android:paddingHorizontal="12dp">
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical">
-
-                        <RadioButton
-                            android:id="@+id/bucketsRadio"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="#FF8C42"/>
-
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="12dp">
-
-                            <TextView
-                                android:text="Buckets"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:textColor="#FF8C42"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                            <TextView
-                                android:text="Click buckets to increment"
-                                android:textSize="12sp"
-                                android:textColor="#AA6A35"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <!-- Manual (+1) -->
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="12dp"
-                    android:paddingHorizontal="12dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/settings_option_background">
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical">
-
-                        <RadioButton
-                            android:id="@+id/manualRadio"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="#FF8C42"/>
-
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="12dp">
-
-                            <TextView
-                                android:text="Manual (+1)"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:textColor="#FF8C42"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                            <TextView
-                                android:text="Plus/minus buttons increment by 1"
-                                android:textSize="12sp"
-                                android:textColor="#AA6A35"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <!-- Slider -->
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="12dp"
-                    android:paddingHorizontal="12dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/settings_option_background">
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical">
-
-                        <RadioButton
-                            android:id="@+id/sliderRadio"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="#FF8C42"/>
-
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="12dp">
-
-                            <TextView
-                                android:text="Slider"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:textColor="#FF8C42"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                            <TextView
-                                android:text="Drag slider to set value"
-                                android:textSize="12sp"
-                                android:textColor="#AA6A35"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
+                        android:layout_marginStart="2dp"/>
 
                 </LinearLayout>
 

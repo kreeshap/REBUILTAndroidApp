@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0D0603">
+    android:background="#0D0603"
+    tools:ignore="ScrollViewCount">
 
     <LinearLayout
         android:orientation="vertical"
@@ -24,6 +25,8 @@
                 android:id="@+id/historyButton"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:importantForAccessibility="no"
+                android:contentDescription="TODO"
                 android:src="@android:drawable/ic_menu_recent_history"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:scaleType="centerInside"
@@ -33,7 +36,7 @@
                 android:id="@+id/settingsButton"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@android:drawable/ic_settings"
+                android:src="@drawable/ic_settings"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:scaleType="centerInside"
                 android:layout_marginStart="8dp"
@@ -746,192 +749,194 @@
                     android:gravity="center"
                     android:buttonTint="#FF8C42"/>
 
-                    <CheckBox
-                        android:id="@+id/shift2_scoring"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:buttonTint="#FF8C42"/>
-
-                    <CheckBox
-                        android:id="@+id/shift2_cycling"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:buttonTint="#FF8C42"/>
-                </LinearLayout>
-
-                //shift 3 row
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <CheckBox
+                    android:id="@+id/shift2_scoring"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="12dp">
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:buttonTint="#FF8C42"/>
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Shift 3"
-                        android:textColor="#FF8C42"
-                        android:textSize="14sp"/>
-
-                    <CheckBox
-                        android:id="@+id/shift3_passing"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:buttonTint="#FF8C42"/>
-
-                    <CheckBox
-                        android:id="@+id/shift3_defense"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:buttonTint="#FF8C42"/>
-
-                    <CheckBox
-                        android:id="@+id/shift3_scoring"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:buttonTint="#FF8C42"/>
-
-                    <CheckBox
-                        android:id="@+id/shift3_cycling"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:buttonTint="#FF8C42"/>
-                </LinearLayout>
-
-                //shift 4 row
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <CheckBox
+                    android:id="@+id/shift2_cycling"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="12dp">
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:buttonTint="#FF8C42"/>
+            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Shift 4"
-                        android:textColor="#FF8C42"
-                        android:textSize="14sp"/>
+            <!-- Shift 3 Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:background="#1A1410">
 
-                    <CheckBox
-                        android:id="@+id/shift4_passing"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:buttonTint="#FF8C42"/>
-
-                    <CheckBox
-                        android:id="@+id/shift4_defense"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:buttonTint="#FF8C42"/>
-
-                    <CheckBox
-                        android:id="@+id/shift4_scoring"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:buttonTint="#FF8C42"/>
-
-                    <CheckBox
-                        android:id="@+id/shift4_cycling"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:buttonTint="#FF8C42"/>
-                </LinearLayout>
-
-                //endgame row
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="12dp">
+                    android:layout_weight="1"
+                    android:text="Shift 3"
+                    android:textColor="#FF8C42"
+                    android:textSize="14sp"/>
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Endgame"
-                        android:textColor="#FF8C42"
-                        android:textSize="14sp"/>
+                <CheckBox
+                    android:id="@+id/shift3_passing"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:buttonTint="#FF8C42"/>
 
-                    <CheckBox
-                        android:id="@+id/endgame_passing"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:buttonTint="#FF8C42"/>
+                <CheckBox
+                    android:id="@+id/shift3_defense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:buttonTint="#FF8C42"/>
 
-                    <CheckBox
-                        android:id="@+id/endgame_defense"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:buttonTint="#FF8C42"/>
+                <CheckBox
+                    android:id="@+id/shift3_scoring"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:buttonTint="#FF8C42"/>
 
-                    <CheckBox
-                        android:id="@+id/endgame_scoring"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:buttonTint="#FF8C42"/>
+                <CheckBox
+                    android:id="@+id/shift3_cycling"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:buttonTint="#FF8C42"/>
+            </LinearLayout>
 
-                    <CheckBox
-                        android:id="@+id/endgame_cycling"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:buttonTint="#FF8C42"/>
+            <!-- Shift 4 Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:background="#0D0603">
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Shift 4"
+                    android:textColor="#FF8C42"
+                    android:textSize="14sp"/>
 
-                </LinearLayout>
+                <CheckBox
+                    android:id="@+id/shift4_passing"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:buttonTint="#FF8C42"/>
 
+                <CheckBox
+                    android:id="@+id/shift4_defense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:buttonTint="#FF8C42"/>
+
+                <CheckBox
+                    android:id="@+id/shift4_scoring"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:buttonTint="#FF8C42"/>
+
+                <CheckBox
+                    android:id="@+id/shift4_cycling"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:buttonTint="#FF8C42"/>
+            </LinearLayout>
+
+            <!-- Endgame Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:background="#1A1410">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Endgame"
+                    android:textColor="#FF8C42"
+                    android:textSize="14sp"/>
+
+                <CheckBox
+                    android:id="@+id/endgame_passing"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:buttonTint="#FF8C42"/>
+
+                <CheckBox
+                    android:id="@+id/endgame_defense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:buttonTint="#FF8C42"/>
+
+                <CheckBox
+                    android:id="@+id/endgame_scoring"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:buttonTint="#FF8C42"/>
+
+                <CheckBox
+                    android:id="@+id/endgame_cycling"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:buttonTint="#FF8C42"/>
             </LinearLayout>
 
         </LinearLayout>
 
+        <!-- Separator -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#4A2F1F"
+            android:layout_marginBottom="16dp"/>
 
-
-
-
-        //endgame fuel
+        <!-- Endgame Section -->
         <TextView
             android:text="Endgame"
             android:textStyle="bold"
@@ -942,7 +947,6 @@
             android:layout_height="wrap_content"
             android:paddingBottom="12dp"/>
 
-        //endgame fuel
         <RadioGroup
             android:id="@+id/hangRadioGroup"
             android:orientation="horizontal"
@@ -1025,15 +1029,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </RadioGroup>
+
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="Comments:"
             android:textSize="18sp"
             android:textColor="#FF8C42"
             android:gravity="center"
-            android:paddingBottom="12dp" >
-        </TextView>
+            android:paddingTop="16dp"
+            android:paddingBottom="12dp"/>
 
         <EditText
             android:id="@+id/Comments"
@@ -1054,7 +1059,6 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"/>
 
-        //buttons
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -1095,7 +1099,6 @@
 
         </LinearLayout>
 
-
-    </ScrollView>
+    </LinearLayout>
 
 </ScrollView>

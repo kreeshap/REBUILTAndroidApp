@@ -1,5 +1,6 @@
 package com.example.bucketsbranch;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -46,8 +47,6 @@ public class QRCodeActivity extends AppCompatActivity {
 
     private void initializeViews() {
         qrCodeImageView = findViewById(R.id.qrCodeImageView);
-        dataPreviewText = findViewById(R.id.dataPreviewText);
-        instructionsText = findViewById(R.id.instructionsText);
         saveButton = findViewById(R.id.saveButton);
         shareButton = findViewById(R.id.shareButton);
         closeButton = findViewById(R.id.closeButton);
@@ -206,6 +205,7 @@ public class QRCodeActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("GestureBackNavigation")
     @Override
     public void onBackPressed() {
         super.onBackPressed();
